@@ -32,8 +32,8 @@ app.use(bodyParser.json());
 //=========================================================
 
 
-
-
+//Get Route
+//Show all contacts
 app.get('/contacts', function(req,res){
 
   console.log('I recieved a GET Request');
@@ -57,6 +57,8 @@ app.get('/contacts', function(req,res){
   });
 });
 
+
+//Create Route
 app.post('/contacts', function(req,res) {
   console.log(req.body); // from terminal
 
@@ -66,6 +68,53 @@ app.post('/contacts', function(req,res) {
       throw err;
     } else {
       res.json(newContact);
+    }
+  });
+});
+
+//Delete Route
+app.delete('/contacts/:id', function(req, res){
+  var id = req.params.id;
+  // console.log(id);
+  Contact.findByIdAndRemove(id, function(err, contact) {
+    if(err) {
+      console.log(err);
+      throw err;
+    } else {
+      res.json(contact);
+    }
+  });
+});
+
+
+app.get('/contacts/:id', function(req,res){
+  var id = req.params.id;
+  console.log(id);
+  Contact.findById(id,function(err,foundContact) {
+    if (err) {
+      console.log(err);
+      throw err;
+    } else {
+      res.json(foundContact);
+    }
+  });
+});
+
+app.put('/contacts/:id', function(req, res) {
+  var id = req.params.id;
+
+
+  var newContact = {
+    name: req.body.name,
+    email: req.body.email,
+    number: req.body.number
+  };
+
+  Contact.findByIdAndUpdate(id,newContact, function(err, updatedContact){
+    if(err){
+      console.log(err);
+    } else {
+      res.json(updatedContact);
     }
   });
 });

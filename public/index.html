@@ -17,11 +17,13 @@
           <th>Email</th>
           <th>Number</th>
           <th>Action</th>
+          <th>&nbsp;</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>
+            <!--ng model to be passed to angular as a data placeholder to the contact data model-->
             <input type="text" class="form-control" ng-model="contact.name">
           </td>
           <td>
@@ -33,11 +35,23 @@
           <td>
             <button class="btn btn-primary" ng-click="addContact()"> Add Contact </button>
           </td>
+          <td>
+            <button class="btn btn-info" ng-click="update()">Update</button>
+          </td>
+          <td>
+            <button class="btn btn-info" ng-click="clear()">Clear</button>
+          </td>
         </tr>
         <tr ng-cloak ng-repeat="contact in contacts">
           <td>{{contact.name}}</td>
           <td>{{contact.email}}</td>
           <td>{{contact.number}}</td>
+          <td>
+            <button class="btn btn-danger" ng-click="delete(contact._id)">Delete</button>
+          </td>
+          <td>
+            <button class="btn btn-warning" ng-click="edit(contact._id)">Edit</button>
+          </td>
         </tr>
       </tbody>
     </table>
