@@ -25,31 +25,47 @@ db.once('open', function() {
 });
 //=========================================================
 
+//MiddleWares
+//=========================================================
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.json());
+//=========================================================
+
+
+
 
 app.get('/contacts', function(req,res){
 
   console.log('I recieved a GET Request');
 
   //Todo Create a SEED for the DATABASE
-
-
-  Contact.create({name: 'WowuFranku', email: 'wowu@gmail.com', number:'(555)-5555'}, function(err, newContact) {
-    if(err) {
-      console.log(err)
-      throw err;
-    } else {
-      console.log(newContact);
-    }
-  });
-
-
+  // Contact.create({name: 'WowuFranku', email: 'wowu@gmail.com', number:'(555)-5555'}, function(err, newContact) {
+  //   if(err) {
+  //     console.log(err)
+  //     throw err;
+  //   } else {
+  //     console.log(newContact);
+  //   }
+  // });
   Contact.find({}, function(err,contacts){
     if(err) {
       console.log(err);
       throw err;
     } else {
       res.json(contacts);
+    }
+  });
+});
+
+app.post('/contacts', function(req,res) {
+  console.log(req.body); // from terminal
+
+  Contact.create(req.body, function(err, newContact){
+    if(err) {
+      console.log(err);
+      throw err;
+    } else {
+      res.json(newContact);
     }
   });
 });
